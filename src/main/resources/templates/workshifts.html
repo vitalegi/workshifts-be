@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Turni lavorativi</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="_csrf" content="${_csrf.token}" />
+<meta name="_csrf_header" content="${_csrf.headerName}" />
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+	crossorigin="anonymous">
+	
+</script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="/static/markdown-tuzz.css">
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+<script>
+	$(document).ready(function() {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
+</head>
+<body>
+	<h1>Turni lavorativi</h1>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+
+	<form id="workshift-form" th:action="@{/workshifts}" method="post">
+		<input type="submit" value="Update" />
+		<input type="hidden" name="from" th:value="${ws.from}" />
+		<input type="hidden" name="to" th:value="${ws.to}" />
+		<input type="hidden" name="cars" th:value="${@jsonUtil.getInstance().serialize(ws.carsConstraint)}" />
+		<input type="hidden" name="groups" th:value="${@jsonUtil.getInstance().serialize(ws.groups)}" />
+		<input type="hidden" name="subgroups" th:value="${@jsonUtil.getInstance().serialize(ws.subgroups)}" />
+		<input type="hidden" name="employees" th:value="${@jsonUtil.getInstance().serialize(ws.employees)}" />
+
+		<table class="single-line">
+			<thead>
+				<tr>
+					<th>Macroarea</th>
+					<th>Area</th>
+					<th>Risorsa</th>
+					<th
+						th:each="day : ${range}"
+						th:utext="${#temporals.format(day, 'dd')}"
+						th:classappend="${ws.getTdCssClass(day)}"
+					/></th>
+				</tr>
+			</thead> 
+			<tbody>
+				<tr>
+					<td colspan="3"></td>
+					<td 
+						th:each="day : ${range}" 
+						th:utext="${ws.getDayOfWeekCode(day)}"
+						th:classappend="${ws.getTdCssClass(day)}">
+					</td>
+				</tr>
+				<tr th:each="employee : ${ws.employees}">
+					<td th:utext="${employee.subgroup.parent.name}"></td>
+					<td th:utext="${employee.subgroup.name}"></td>
+					<td>
+						<span th:utext="${employee.fullName}"></span>
+					</td>
+					<td class="no-border"
+						th:each="day : ${range}"
+						th:classappend="${ws.getTdCssClass(employee, day)}">
+						
+						<select th:name="'employee_' + ${employee.id} + '_' + ${@dateUtil.format(day)}" 
+							class="full-space" 
+							data-toggle="tooltip" 
+							data-placement="top" 
+							data-html="true" 
+							th:title="${@validateWorkShiftsService.getErrorsHtml(ws, employee, day)}"
+							onchange="document.getElementById('workshift-form').submit();"
+							th:classappend="${@validateWorkShiftsService.hasErrors(ws, employee, day)} ? warning">
+						<option 
+								th:each="label : ${ws.getActions()}" 
+								th:value="${label}" 
+								th:text="${label}" 
+								th:selected="${ws.getSelectedAction(employee, day) == label}"></option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td rowspan="4">Auto</td>
+					<td colspan="2" rowspan="2">Mattina</td>
+					<td 
+						th:each="day : ${range}" 
+						th:classappend="${ws.getCarsTdCssClass(day)}"
+						th:utext="${ws.getUsedCars(day, 'MORNING')}"
+						data-toggle="tooltip"
+						data-placement="top" 
+						data-html="true" 
+						th:title="${@validateWorkShiftsService.getErrorsHtml(ws, null, day)}"
+					>
+					</td>
+				</tr>
+				<tr>
+					<td th:each="day : ${range}" th:utext="${ws.getAvailableCars(day)}" th:classappend="${ws.getTdCssClass(day)}"></td>
+				</tr>
+				<tr>
+					<td colspan="2" rowspan="2">Pomeriggio</td>
+					<td th:each="day : ${range}" th:utext="${ws.getUsedCars(day, 'AFTERNOON')}" th:classappend="${ws.getTdCssClass(day)}"></td>
+				</tr>
+				<tr>
+					<td th:each="day : ${range}" th:utext="${ws.getAvailableCars(day)}" th:classappend="${ws.getTdCssClass(day)}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+</html>
