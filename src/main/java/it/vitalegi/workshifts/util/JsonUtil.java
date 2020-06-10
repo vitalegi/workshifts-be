@@ -1,5 +1,7 @@
 package it.vitalegi.workshifts.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 import javax.annotation.PostConstruct;
@@ -38,6 +40,16 @@ public class JsonUtil {
 		try {
 			return getMapper().readValue(json, clazz);
 		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public <E> E deserialize(InputStream is, Class<E> clazz) {
+		try {
+			return getMapper().readValue(is, clazz);
+		} catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

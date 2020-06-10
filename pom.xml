@@ -22,7 +22,7 @@
 	<repositories>
 		<repository>
 			<id>local-maven-repo</id>
-			<url>file:///${project.basedir}/local-maven-repo</url>
+			<url>file:${project.basedir}/local-maven-repo</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -101,8 +101,6 @@
 			<groupId>javax.cache</groupId>
 			<artifactId>cache-api</artifactId>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.optaplanner</groupId>
 			<artifactId>optaplanner-core</artifactId>
@@ -112,13 +110,26 @@
 		<dependency>
 			<groupId>com.google</groupId>
 			<artifactId>ortools</artifactId>
-			<version>1.0.0</version>
+			<version>7.6.7691</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google</groupId>
 			<artifactId>protobuf</artifactId>
-			<version>1.0.0</version>
+			<version>7.6.7691</version>
 		</dependency>
+
+		<!-- <dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>4.1.2</version>
+		</dependency>-->
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

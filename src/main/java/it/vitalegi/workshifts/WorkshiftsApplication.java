@@ -9,7 +9,7 @@ public class WorkshiftsApplication {
 	public static void main(String[] args) {
 		System.out.println("Link library");
 		try {
-			System.loadLibrary("lib/jniortools");
+			System.loadLibrary("jniortools");
 			System.out.println("Linked");
 		} catch (UnsatisfiedLinkError e) {
 			System.err.println(e);

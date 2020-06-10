@@ -31,3 +31,10 @@ build/
 .vscode/
 logs/
 local-maven-repo/
+or-tools/or-tools_flatzinc_centos-8_v7.6.7691.tar.gz
+or-tools/or-tools_flatzinc_VisualStudio2019-64bit_v7.6.7691.zip
+or-tools/or-tools_centos-8_v7.6.7691.tar.gz
+or-tools/or-tools_VisualStudio2019-64bit_v7.6.7691.zip
+lib/ortools.lib
+~$workshift1.xlsx
+workshift1.xlsx

@@ -61,18 +61,4 @@ public class WorkShiftsController {
 
 		return "workshifts";
 	}
-
-	@PostMapping("/workshifts/add")
-	@LogExecutionTime
-	public ModelAndView addStock(Model model, String stockId, String date, BigDecimal price, int quantity) {
-
-		return new ModelAndView("redirect:/workshifts");
-	}
-	
-	@GetMapping("/workshifts2")
-	@LogExecutionTime
-	public ModelAndView getWorkShifts2(Model model) {
-		
-		return new ModelAndView("redirect:/static/ws/index.html");
-	}
 }
