@@ -50,12 +50,26 @@ mvn clean package
 
 ## Run
 
+### Eclipse
+
+```
+set PATH=C:\Program Files\Java\jdk1.8.0_131\bin;%PATH%
+
+Define Run Configuration with VM Arguments:
+-Djava.library.path=C:\a\software\or-tools_VisualStudio2019-64bit_v7.6.7691\lib
+```
+
+### Windows
+
 ```
 set PATH=C:\Program Files\Java\jdk1.8.0_131\bin;%PATH%
 java -jar .\target\workshifts-${project.version}.jar <OPTIONS>
 
-java -Djava.library.path=/path/to/or-tools/lib -jar path/to/workshifts-be-0.0.1.jar --spring.profiles.active=prod
-
 java -Djava.library.path=C:\a\software\or-tools_VisualStudio2019-64bit_v7.6.7691\lib -jar target\workshifts-be-0.0.1.jar --spring.profiles.active=discovery
+```
 
+### Linux
+
+```
+java -Djava.library.path=/path/to/or-tools/lib -jar path/to/workshifts-be-0.0.1.jar --spring.profiles.active=prod
 ```

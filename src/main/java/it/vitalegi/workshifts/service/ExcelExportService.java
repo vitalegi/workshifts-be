@@ -212,7 +212,7 @@ public class ExcelExportService {
 	protected void createSubgroupLine(int rowIndex) {
 		XSSFRow row = sheet.createRow(rowIndex);
 		row.setHeightInPoints(6);
-		int columns = 1 + range().size();
+		int columns = 2 + range().size();
 		for (int column = 0; column < columns; column++) {
 			XSSFCell cell = row.createCell(column);
 			CellStyle style = new StyleFactory().right(THIN).left(THIN).build();
