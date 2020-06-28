@@ -1,7 +1,6 @@
 package it.vitalegi.workshifts.controller;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +9,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,8 +31,7 @@ public class WorkShiftsRestController {
 
 	@Autowired
 	ExcelExportServiceFactory exportExcelServiceFactory;
-
-	@CrossOrigin
+	
 	@PostMapping(value = "/export", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<byte[]> exportExcel(@RequestBody WorkContext context) {
 		log.info("Request: " + context);
@@ -46,7 +43,6 @@ public class WorkShiftsRestController {
 		return new ResponseEntity<byte[]>(os.toByteArray(), headers, HttpStatus.OK);
 	}
 
-	@CrossOrigin
 	@PostMapping(value = "/optimize", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@LogExecutionTime
 	public ResponseEntity<?> optimize(@RequestBody OptimizationContext context) {
