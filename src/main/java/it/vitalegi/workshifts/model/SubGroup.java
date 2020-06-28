@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SubGroup extends Group {
+public class Subgroup extends Group {
 
-	Group parent;
+	int groupId;
 }

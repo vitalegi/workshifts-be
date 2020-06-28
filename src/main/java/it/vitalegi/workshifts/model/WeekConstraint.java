@@ -1,5 +1,7 @@
 package it.vitalegi.workshifts.model;
 
+import java.time.DayOfWeek;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,7 +9,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ErrorMessage {
+public class WeekConstraint {
 
-	protected String message;
+	DayOfWeek dayOfWeek;
+	Action action;
+	String type;
+	int value = 0;
 }

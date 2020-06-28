@@ -1,4 +1,4 @@
-package it.vitalegi.workshifts.rest.model;
+package it.vitalegi.workshifts.model;
 
 import java.time.LocalDate;
 

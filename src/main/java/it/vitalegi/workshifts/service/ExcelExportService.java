@@ -26,11 +26,11 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import it.vitalegi.workshifts.rest.model.Employee;
-import it.vitalegi.workshifts.rest.model.Group;
-import it.vitalegi.workshifts.rest.model.Shift;
-import it.vitalegi.workshifts.rest.model.Subgroup;
-import it.vitalegi.workshifts.rest.model.WorkContext;
+import it.vitalegi.workshifts.model.Employee;
+import it.vitalegi.workshifts.model.Group;
+import it.vitalegi.workshifts.model.Shift;
+import it.vitalegi.workshifts.model.Subgroup;
+import it.vitalegi.workshifts.model.WorkContext;
 import it.vitalegi.workshifts.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 

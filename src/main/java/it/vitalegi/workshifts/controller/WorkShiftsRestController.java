@@ -2,7 +2,6 @@ package it.vitalegi.workshifts.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,13 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.ortools.linearsolver.MPSolver.ResultStatus;
-
-import it.vitalegi.workshifts.optimizer.MPSolverImpl;
-import it.vitalegi.workshifts.rest.model.WorkContext;
-import it.vitalegi.workshifts.rest.model.optimization.OptimizationContext;
-import it.vitalegi.workshifts.rest.model.optimization.VariableSolution;
+import it.vitalegi.workshifts.model.WorkContext;
+import it.vitalegi.workshifts.optimization.model.OptimizationContext;
+import it.vitalegi.workshifts.optimization.model.VariableSolution;
 import it.vitalegi.workshifts.service.ExcelExportServiceFactory;
+import it.vitalegi.workshifts.service.OptimizeWorkShiftService;
 import it.vitalegi.workshifts.util.logging.LogExecutionTime;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +28,10 @@ public class WorkShiftsRestController {
 
 	@Autowired
 	ExcelExportServiceFactory exportExcelServiceFactory;
-	
+
+	@Autowired
+	OptimizeWorkShiftService optimizeWorkShiftService;
+
 	@PostMapping(value = "/export", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<byte[]> exportExcel(@RequestBody WorkContext context) {
 		log.info("Request: " + context);
@@ -46,39 +46,8 @@ public class WorkShiftsRestController {
 	@PostMapping(value = "/optimize", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@LogExecutionTime
 	public ResponseEntity<?> optimize(@RequestBody OptimizationContext context) {
-		MPSolverImpl optimizer = new MPSolverImpl();
-		context.getVariables().forEach(variable -> {
-			optimizer.addIntVar(variable.getName(), variable.getMin(), variable.getMax());
-		});
-		context.getConstraints().forEach(constraint -> {
-			optimizer.addConstraint(constraint.getName(), constraint.getMin(), constraint.getMax());
-			constraint.getCoefficients().forEach(coefficient -> {
-				optimizer.addConstraintCoefficient(constraint.getName(), coefficient.getName(),
-						coefficient.getCoefficient());
-			});
-		});
 
-		optimizer.setMaximization();
-		context.getObjective().forEach(objective -> {
-			optimizer.addObjectiveCoefficient(objective.getName(), objective.getCoefficient());
-		});
-		log.info("Optimize {} variables and {} constraints", optimizer.getNumVariables(),
-				optimizer.getNumConstraints());
-
-		ResultStatus resultStatus = optimizer.solve();
-		if (resultStatus == ResultStatus.OPTIMAL) {
-			log.info("Score: {}", optimizer.getObjective().value());
-
-			List<VariableSolution> solutions = context.getVariables().stream().map(variable -> {
-				long value = Math.round(optimizer.getVar(variable.getName()).solutionValue());
-				VariableSolution solution = new VariableSolution();
-				solution.setName(variable.getName());
-				solution.setValue(value);
-				return solution;
-			}).collect(Collectors.toList());
-			return new ResponseEntity<List<VariableSolution>>(solutions, HttpStatus.OK);
-		}
-		log.info("No solution found");
-		return new ResponseEntity<Object>("No solution found", HttpStatus.INTERNAL_SERVER_ERROR);
+		List<VariableSolution> solutions = optimizeWorkShiftService.optimize(context);
+		return new ResponseEntity<List<VariableSolution>>(solutions, HttpStatus.OK);
 	}
 }

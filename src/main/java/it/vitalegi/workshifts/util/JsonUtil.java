@@ -43,7 +43,7 @@ public class JsonUtil {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public <E> E deserialize(InputStream is, Class<E> clazz) {
 		try {
 			return getMapper().readValue(is, clazz);

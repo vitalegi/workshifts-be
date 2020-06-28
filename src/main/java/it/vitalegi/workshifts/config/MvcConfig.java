@@ -20,25 +20,23 @@ public class MvcConfig implements WebMvcConfigurer {
 
 	@Value("${cors.allowedOrigins}")
 	String corsAllowedOrigins;
-	
-	
+
 	@Override
-    public void addViewControllers(ViewControllerRegistry registry) {
+	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/home").setViewName("home");
 		registry.addViewController("/").setViewName("home");
 	}
-	
+
 	@Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/static/**")
-                    .addResourceLocations("classpath:/static/")
-                    .setCachePeriod(0);
-    }
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/").setCachePeriod(0);
+	}
+
 	@Override
-    public void addCorsMappings(CorsRegistry registry) {
-        CorsRegistration cors = registry.addMapping("/**");
-        log.info("Cors - allowed origins: {}", corsAllowedOrigins);
-        cors.allowedOrigins(corsAllowedOrigins);
-    }
-	
+	public void addCorsMappings(CorsRegistry registry) {
+		CorsRegistration cors = registry.addMapping("/**");
+		log.info("Cors - allowed origins: {}", corsAllowedOrigins);
+		cors.allowedOrigins(corsAllowedOrigins);
+	}
+
 }

@@ -1,19 +1,16 @@
-package it.vitalegi.workshifts.optimizer;
+package it.vitalegi.workshifts.optimization;
 
-import java.util.Arrays;
-
-import org.optaplanner.core.api.solver.Solver;
-import org.optaplanner.core.api.solver.SolverFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 import com.google.ortools.linearsolver.MPConstraint;
 import com.google.ortools.linearsolver.MPObjective;
 import com.google.ortools.linearsolver.MPSolver;
 import com.google.ortools.linearsolver.MPVariable;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component

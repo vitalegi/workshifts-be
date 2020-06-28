@@ -1,4 +1,4 @@
-package it.vitalegi.workshifts.rest.model.optimization;
+package it.vitalegi.workshifts.optimization.model;
 
 import java.util.List;
 

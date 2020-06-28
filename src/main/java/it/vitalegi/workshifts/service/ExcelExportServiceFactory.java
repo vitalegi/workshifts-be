@@ -2,7 +2,7 @@ package it.vitalegi.workshifts.service;
 
 import org.springframework.stereotype.Service;
 
-import it.vitalegi.workshifts.rest.model.WorkContext;
+import it.vitalegi.workshifts.model.WorkContext;
 
 @Service
 public class ExcelExportServiceFactory {

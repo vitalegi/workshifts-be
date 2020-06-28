@@ -1,4 +1,4 @@
-package it.vitalegi.workshifts.optimizer;
+package it.vitalegi.workshifts.optimization;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class MPSolverImpl {
 	public MPVariable addIntVar(String name, int from, int to) {
 		if (getVar(name) != null) {
 			throw new IllegalArgumentException("Variable " + name + " alraedy defined");
-		} 
+		}
 		log.debug("Add Var: {}", name);
 		MPVariable variable = solver.makeIntVar(from, to, name);
 		variables.put(name, variable);
@@ -59,7 +59,7 @@ public class MPSolverImpl {
 		if (getConstraint(name) != null) {
 			throw new IllegalArgumentException("Constraint " + name + " alraedy defined");
 		}
-		log.debug("Add Constraint: {}", name); 
+		log.debug("Add Constraint: {}", name);
 		MPConstraint constraint = solver.makeConstraint(from, to, name);
 		constraints.put(name, constraint);
 	}

@@ -1,5 +1,7 @@
 package it.vitalegi.workshifts.model;
 
+import java.util.List;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +15,5 @@ public class Group {
 
 	int id;
 	String name;
-	GroupConstraint constraints;
+	List<WeekConstraint> constraints;
 }

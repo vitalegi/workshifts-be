@@ -1,18 +1,18 @@
 package it.vitalegi.workshifts.util;
 
+import static java.time.DayOfWeek.FRIDAY;
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.DayOfWeek.THURSDAY;
+import static java.time.DayOfWeek.TUESDAY;
+import static java.time.DayOfWeek.WEDNESDAY;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
-
-import static java.time.DayOfWeek.MONDAY;
-import static java.time.DayOfWeek.TUESDAY;
-import static java.time.DayOfWeek.WEDNESDAY;
-import static java.time.DayOfWeek.THURSDAY;
-import static java.time.DayOfWeek.FRIDAY;
-import static java.time.DayOfWeek.SATURDAY;
-import static java.time.DayOfWeek.SUNDAY;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
